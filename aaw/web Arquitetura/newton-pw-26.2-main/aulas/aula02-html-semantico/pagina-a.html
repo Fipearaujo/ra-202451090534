@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Adote um Pet — Belo Horizonte</title>
+  <!--
+    PAGINA A — "div soup"
+    Toda a estrutura foi feita com <div class="...">. Nenhum elemento diz o que ele E.
+    O CSS abaixo e IDENTICO ao da pagina-b.html: ele estiliza tanto as classes (pagina A)
+    quanto os elementos semanticos (pagina B). Por isso as duas paginas renderizam igual.
+    NAO altere o CSS de um arquivo sem alterar o do outro.
+  -->
+  <style>
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: system-ui, Segoe UI, Arial, sans-serif;
+      color: #1e293b;
+      background: #f5f7fa;
+      line-height: 1.6;
+    }
+    .topo, header { background: #1f3864; color: #fff; padding: 24px 32px 16px; }
+    .titulo-site, .site-nome { font-size: 26px; font-weight: 700; margin: 0 0 4px; }
+    .subtitulo-site { font-size: 14px; color: #aec3e0; margin: 0; }
+    .menu, nav { background: #2e75b6; padding: 10px 32px; }
+    .menu a, nav a { color: #fff; text-decoration: none; margin-right: 20px; font-size: 14px; }
+    .menu a:hover, nav a:hover { text-decoration: underline; }
+    .conteudo { display: flex; gap: 24px; padding: 28px 32px; align-items: flex-start; }
+    .miolo, main { flex: 1 1 auto; }
+    .lateral, aside {
+      flex: 0 0 250px; background: #fff; border: 1px solid #e2e8f0;
+      border-radius: 6px; padding: 16px 20px;
+    }
+    .post, article {
+      background: #fff; border: 1px solid #e2e8f0; border-radius: 6px;
+      padding: 20px 24px; margin-bottom: 20px;
+    }
+    .titulo-g, h1 { font-size: 24px; font-weight: 700; color: #1f3864; margin: 0 0 12px; }
+    .titulo-m, h2 { font-size: 19px; font-weight: 700; color: #1f3864; margin: 0 0 10px; }
+    .titulo-p, h3 { font-size: 15px; font-weight: 700; color: #2e75b6; margin: 0 0 6px; }
+    .texto, p { margin: 0 0 12px; }
+    .lista, ul { margin: 0 0 12px; padding-left: 22px; }
+    .rodape, footer {
+      background: #1f3864; color: #aec3e0; padding: 18px 32px;
+      font-size: 13px; text-align: center;
+    }
+    .selo { display: inline-block; background: #eef3fa; color: #1f3864;
+      border-radius: 4px; padding: 2px 8px; font-size: 12px; font-weight: 700; }
+  </style>
+</head>
+<body>
+
+  <div class="topo">
+    <div class="titulo-site">Adote um Pet — Belo Horizonte</div>
+    <div class="subtitulo-site">Cães e gatos resgatados esperando por uma família</div>
+  </div>
+
+  <div class="menu">
+    <a href="#disponiveis">Disponíveis</a>
+    <a href="#como-adotar">Como adotar</a>
+    <a href="#contato">Contato</a>
+  </div>
+
+  <div class="conteudo">
+    <div class="miolo">
+
+      <div class="post">
+        <div class="titulo-g">Pets disponíveis para adoção</div>
+        <div class="texto">
+          Todos os animais desta página estão vacinados, vermifugados e castrados.
+          A adoção é gratuita e acompanhada por uma entrevista com a equipe.
+        </div>
+      </div>
+
+      <div class="post" id="disponiveis">
+        <div class="titulo-m">Luna</div>
+        <div class="titulo-p">Cadela · 3 anos · porte médio</div>
+        <div class="texto">
+          Resgatada na região da Pampulha em março. É calma, já sabe passear na guia
+          e convive bem com outros cães.
+        </div>
+        <div class="selo">Vacinada</div>
+      </div>
+
+      <div class="post">
+        <div class="titulo-m">Thor</div>
+        <div class="titulo-p">Cão · 1 ano · porte grande</div>
+        <div class="texto">
+          Muito enérgico e brincalhão. Precisa de uma casa com espaço e de alguém
+          com tempo para passeios diários.
+        </div>
+        <div class="selo">Castrado</div>
+      </div>
+
+      <div class="post" id="como-adotar">
+        <div class="titulo-m">Como adotar</div>
+        <div class="lista">
+          <ul>
+            <li>Escolha o pet e envie o formulário de interesse.</li>
+            <li>Participe de uma entrevista de 20 minutos com a equipe.</li>
+            <li>Receba a visita de acolhimento na sua casa.</li>
+            <li>Assine o termo de adoção responsável.</li>
+          </ul>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="lateral">
+      <div class="titulo-p">Precisamos de ajuda</div>
+      <div class="texto">
+        Não pode adotar agora? Você ainda pode ser lar temporário ou doar ração.
+      </div>
+      <div class="titulo-p">Horário</div>
+      <div class="texto">Seg a sex, 9h às 17h</div>
+    </div>
+  </div>
+
+  <div class="rodape" id="contato">
+    Projeto Adote um Pet · Belo Horizonte/MG · contato@exemplo.org
+  </div>
+
+</body>
+</html>

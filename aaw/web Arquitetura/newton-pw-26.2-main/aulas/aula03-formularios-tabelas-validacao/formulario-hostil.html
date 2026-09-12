@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cadastro de interesse em adoção</title>
+  <!--
+    ============================================================
+    ATENCAO — ESTE ARQUIVO E UM ANTI-EXEMPLO PROPOSITAL.
+    ============================================================
+    Ele foi escrito para a fase Engajar da Aula 3: o professor tenta preenche-lo
+    ao vivo e a turma lista tudo o que esta errado.
+
+    Os 6 defeitos plantados (nao corrija — eles sao o conteudo da aula):
+      1. Rotulos em <span>/<div> sem <label for>: clicar no texto nao foca o campo.
+      2. E-mail com type="text" e sem validacao: aceita "batata".
+      3. Telefone com type="text": abre teclado alfabetico no celular.
+      4. Nenhum atributo required: a validacao e feita so no submit, por JavaScript,
+         e o formulario e LIMPADO quando da erro.
+      5. Botao diz apenas "Enviar", sem dizer o que sera enviado.
+      6. <table> usada para LAYOUT do formulario, nao para dados tabulares.
+
+    Usado tambem nas Rodadas 2 e 4 do handout do aluno.
+    A versao correta e o que a turma constroi na fase Elaborar (contato.html).
+  -->
+  <style>
+    body {
+      font-family: system-ui, Segoe UI, Arial, sans-serif;
+      color: #1e293b; background: #f5f7fa;
+      margin: 0; padding: 32px; line-height: 1.5;
+    }
+    .caixa {
+      max-width: 560px; margin: 0 auto; background: #fff;
+      border: 1px solid #e2e8f0; border-radius: 6px; padding: 28px 32px;
+    }
+    h1 { font-size: 22px; color: #1f3864; margin: 0 0 4px; }
+    .sub { font-size: 13px; color: #64748b; margin: 0 0 22px; }
+    /* table de LAYOUT — defeito 6 */
+    table.form { width: 100%; border-collapse: collapse; }
+    table.form td { padding: 6px 4px; vertical-align: middle; }
+    table.form td.rot { width: 38%; }
+    input, select, textarea {
+      width: 100%; padding: 7px 9px; font-size: 14px; font-family: inherit;
+      border: 1px solid #cbd5e1; border-radius: 4px;
+    }
+    button {
+      margin-top: 18px; background: #2e75b6; color: #fff; border: 0;
+      padding: 10px 22px; font-size: 15px; border-radius: 4px; cursor: pointer;
+    }
+    .erro {
+      display: none; background: #fdecea; border: 1px solid #c0392b;
+      color: #922b21; padding: 10px 14px; border-radius: 4px;
+      margin-bottom: 18px; font-size: 14px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="caixa">
+    <h1>Cadastro de interesse em adoção</h1>
+    <p class="sub">Preencha os dados abaixo e entraremos em contato.</p>
+
+    <div class="erro" id="erro"></div>
+
+    <form id="form" onsubmit="return validar(event)">
+      <!-- defeito 6: tabela usada para posicionar campos -->
+      <table class="form">
+        <tr>
+          <!-- defeito 1: rotulo em <span>, sem <label for> -->
+          <td class="rot"><span>Nome completo</span></td>
+          <td><input type="text" id="c1" name="nome"></td>
+        </tr>
+        <tr>
+          <td class="rot"><span>E-mail</span></td>
+          <!-- defeito 2: type="text" num campo de e-mail -->
+          <td><input type="text" id="c2" name="email"></td>
+        </tr>
+        <tr>
+          <td class="rot"><span>Telefone</span></td>
+          <!-- defeito 3: type="text" num campo de telefone -->
+          <td><input type="text" id="c3" name="telefone"></td>
+        </tr>
+        <tr>
+          <td class="rot"><span>Idade</span></td>
+          <td><input type="text" id="c4" name="idade"></td>
+        </tr>
+        <tr>
+          <td class="rot"><span>Tipo de pet</span></td>
+          <td>
+            <select id="c5" name="pet">
+              <option>Selecione</option>
+              <option>1</option>
+              <option>2</option>
+            </select>
+          </td>
+        </tr>
+        <tr>
+          <td class="rot"><span>Por que quer adotar</span></td>
+          <td><textarea id="c6" name="motivo" rows="3"></textarea></td>
+        </tr>
+      </table>
+
+      <!-- defeito 5: o botao nao diz o que vai acontecer -->
+      <button type="submit">Enviar</button>
+    </form>
+  </div>
+
+  <script>
+    // defeito 4: nenhum required no HTML. A validacao acontece somente aqui,
+    // depois do envio — e o formulario e limpado, fazendo a pessoa digitar tudo de novo.
+    function validar(ev) {
+      ev.preventDefault();
+      var faltando = [];
+      if (!document.getElementById('c1').value) faltando.push('nome');
+      if (!document.getElementById('c2').value) faltando.push('e-mail');
+      if (!document.getElementById('c3').value) faltando.push('telefone');
+
+      if (faltando.length) {
+        var box = document.getElementById('erro');
+        box.textContent = 'Erro no cadastro. Preencha os campos obrigatórios e tente novamente.';
+        box.style.display = 'block';
+        document.getElementById('form').reset();  // <- o pecado capital
+        return false;
+      }
+
+      alert('Cadastro enviado!');
+      return false;
+    }
+  </script>
+
+</body>
+</html>

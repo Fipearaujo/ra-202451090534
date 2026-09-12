@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quem ganha? — Quiz de especificidade CSS</title>
+  <!--
+    ============================================================
+    QUIZ DE ESPECIFICIDADE — Aula 4 (fase Engajar + Rodada 3 do handout)
+    ============================================================
+    Cada caixa tem regras de cor conflitantes. A turma aposta VERDE ou VERMELHO
+    antes de o professor revelar. Confirmar sempre no DevTools (Styles), onde as
+    regras perdedoras aparecem riscadas.
+
+    Notacao de especificidade: (id, classe, elemento)
+
+    GABARITO — nao projetar antes das apostas:
+      1  VERDE     #alvo1 (1,0,0)=100  vence  .vermelho1 (0,1,0)=10
+      2  VERMELHO  #c2 p (1,0,1)=101   vence  .verde2 (0,1,0)=10   <- A ARMADILHA
+      3  VERDE     empate em (0,1,0): vence a ULTIMA declarada
+      4  VERMELHO  style inline (1,0,0,0) vence qualquer seletor da folha
+      5  VERDE     !important vence inline
+      6  VERDE     .a6.b6 (0,2,0)=20   vence  .b6 (0,1,0)=10
+      7  VERDE     o <p> nao declara cor: HERDA do pai #c7
+      8  VERMELHO  .card8 .destaque8 span (0,2,1) vence .card8 span (0,1,1)
+
+    Placar: 5 verdes, 3 vermelhos. A caixa 2 e o coracao da aula — quase todo mundo
+    erra, porque "class vence elemento" foi decorado sem a soma completa.
+  -->
+  <style>
+    body {
+      font-family: system-ui, Segoe UI, Arial, sans-serif;
+      background: #f5f7fa; color: #1e293b;
+      margin: 0; padding: 28px 32px; line-height: 1.5;
+    }
+    h1 { font-size: 22px; color: #1f3864; margin: 0 0 6px; }
+    .intro { font-size: 14px; color: #64748b; margin: 0 0 24px; max-width: 760px; }
+    .grade { display: flex; flex-wrap: wrap; gap: 16px; }
+    .caixa {
+      flex: 0 0 300px; background: #fff; border: 1px solid #e2e8f0;
+      border-radius: 6px; padding: 14px 18px;
+    }
+    .caixa h2 { font-size: 12px; color: #2e75b6; margin: 0 0 8px; text-transform: uppercase; }
+    .caixa pre {
+      background: #f4f6f8; border: 1px solid #d5d8dc; border-radius: 4px;
+      font-family: Consolas, monospace; font-size: 11.5px; color: #1e293b;
+      margin: 0 0 12px; padding: 8px 10px; overflow-x: auto;
+    }
+    .alvo { font-size: 19px; font-weight: 700; margin: 0; }
+
+    /* 1 — id contra class: id vence */
+    #alvo1      { color: #27ae60; }
+    .vermelho1  { color: #c0392b; }
+
+    /* 2 — class contra id+elemento: o id+elemento vence (101 > 10) */
+    .verde2     { color: #27ae60; }
+    #c2 p       { color: #c0392b; }
+
+    /* 3 — empate: vence a ultima declarada */
+    .empate     { color: #c0392b; }
+    .empate     { color: #27ae60; }
+
+    /* 4 — inline vence a folha (o style esta no HTML, mais abaixo) */
+    #alvo4      { color: #27ae60; }
+
+    /* 5 — !important vence inline */
+    #alvo5      { color: #27ae60 !important; }
+
+    /* 6 — duas classes somam */
+    .b6         { color: #c0392b; }
+    .a6.b6      { color: #27ae60; }
+
+    /* 7 — heranca: o <p> nao tem cor propria */
+    #c7         { color: #27ae60; }
+
+    /* 8 — descendente mais especifico vence */
+    .card8 span                 { color: #27ae60; }
+    .card8 .destaque8 span      { color: #c0392b; }
+  </style>
+</head>
+<body>
+
+  <h1>Quem ganha?</h1>
+  <p class="intro">
+    Em cada caixa há regras de cor conflitantes. Aposte <strong>verde</strong> ou
+    <strong>vermelho</strong> antes de olhar o resultado. Depois confira no DevTools:
+    Elements &rarr; Styles. As regras perdedoras aparecem <s>riscadas</s> — e o painel
+    <em>Computed</em> mostra quem venceu.
+  </p>
+
+  <div class="grade">
+
+    <div class="caixa" id="c1">
+      <h2>1 — id contra class</h2>
+      <pre>#alvo1     { color: verde;    }
+.vermelho1 { color: vermelho; }</pre>
+      <p class="alvo vermelho1" id="alvo1">Aposte a cor</p>
+    </div>
+
+    <div class="caixa" id="c2">
+      <h2>2 — class contra id + elemento</h2>
+      <pre>.verde2 { color: verde;    }
+#c2 p   { color: vermelho; }</pre>
+      <p class="alvo verde2">Aposte a cor</p>
+    </div>
+
+    <div class="caixa" id="c3">
+      <h2>3 — empate técnico</h2>
+      <pre>.empate { color: vermelho; }
+.empate { color: verde;    }</pre>
+      <p class="alvo empate">Aposte a cor</p>
+    </div>
+
+    <div class="caixa" id="c4">
+      <h2>4 — style no atributo</h2>
+      <pre>#alvo4 { color: verde; }
+&lt;p style="color: vermelho"&gt;</pre>
+      <p class="alvo" id="alvo4" style="color: #c0392b;">Aposte a cor</p>
+    </div>
+
+    <div class="caixa" id="c5">
+      <h2>5 — !important</h2>
+      <pre>#alvo5 { color: verde !important; }
+&lt;p style="color: vermelho"&gt;</pre>
+      <p class="alvo" id="alvo5" style="color: #c0392b;">Aposte a cor</p>
+    </div>
+
+    <div class="caixa" id="c6">
+      <h2>6 — uma classe contra duas</h2>
+      <pre>.b6    { color: vermelho; }
+.a6.b6 { color: verde;    }</pre>
+      <p class="alvo a6 b6">Aposte a cor</p>
+    </div>
+
+    <div class="caixa" id="c7">
+      <h2>7 — nenhuma regra no alvo</h2>
+      <pre>#c7 { color: verde; }
+/* nada declarado no &lt;p&gt; */</pre>
+      <p class="alvo">Aposte a cor</p>
+    </div>
+
+    <div class="caixa card8" id="c8">
+      <h2>8 — seletor descendente</h2>
+      <pre>.card8 span            { verde;    }
+.card8 .destaque8 span { vermelho; }</pre>
+      <p class="alvo destaque8"><span>Aposte a cor</span></p>
+    </div>
+
+  </div>
+
+</body>
+</html>
